@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Jpeg Streaming w/ WebSocket</title>
+    <meta charset='utf-8'/>
+    <style>
+      #sfps {
+        position: absolute;
+        color: white;
+        background: gray;
+        width: 130px;
+        left: 5px;
+        top: 435px;
+        z-index: 1;
+        opacity: 1.0;
+      }
+      #rfps {
+        position: absolute;
+        color: white;
+        background: gray;
+        width: 130px;
+        left: 140px;
+        top: 435px;
+        z-index: 1;
+        opacity: 1.0;
+      }
+      @-webkit-keyframes rotate-y {
+          0% { -webkit-transform: scale(1.0, 1.0); }
+         50% { -webkit-transform: scale(-1.0, 1.0); }
+        100% { -webkit-transform: scale(1.0, 1.0); }
+      }
+      #view {
+        -webkit-transition: all 0.5s ease-in-out;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-duration: 5s;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 0;
+        opacity: 1.0;
+      }
+      #gray {
+        -webkit-transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-duration: 5s;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 0;
+        opacity: 0.0;
+      }
+      #loading {
+        -webkit-transition: all 0.5s ease-in-out;
+        position: absolute;
+        left: 312px;
+        top: 232px;
+        z-index: 1;
+        opacity: 1.0;
+      }
+      #do_gray {
+        position: absolute;
+        width: 80px;
+        left: 5px;
+        top: 485px;
+        z-index: 1;
+        opacity: 1.0;
+      }
+      #do_rotate {
+        position: absolute;
+        width: 80px;
+        left: 90px;
+        top: 485px;
+        z-index: 1;
+        opacity: 1.0;
+      }
+    </style>
+    <script type='text/javascript' src='js/jquery-1.4.2.min.js'></script>
+    <script type='text/javascript' src='js/player.js'></script>
+  </head>
+  <body id='body' onload="player.create()">
+    <p id='sfps' align='center'></p>
+    <p id='rfps' align='center'></p>
+    <img id='loading' src='loading.gif'>
+    <canvas id='view' width='640' height='480'></canvas>
+    <canvas id='gray' width='640' height='480'></canvas>
+    <button id='do_gray'>gray(JS)</button>
+    <script>
+      $('#do_gray').click(function() {
+        player.do_gray = !player.do_gray;
+        if (player.do_gray) {
+          $('#view').css('opacity', '0.0');
+          $('#gray').css('opacity', '1.0');
+          $('#do_gray').text('norm');
+          $('#gray').css('-webkit-animation-name', '');
+          $('#do_rotate').text('anim(CSS)');
+        } else {
+          $('#view').css('opacity', '1.0');
+          $('#gray').css('opacity', '0.0');
+          $('#do_gray').text('gray(JS)');
+          $('#view').css('-webkit-animation-name', '');
+          $('#do_rotate').text('anim(CSS)');
+        }
+      });
+    </script>
+    <button id='do_rotate'>anim(CSS)</button>
+    <script>
+      $('#do_rotate').click(function() {
+        var _tgt = (player.do_gray) ? $('#gray') : $('#view');
+        if (_tgt.css('-webkit-animation-name') == 'rotate-y') {
+          _tgt.css('-webkit-animation-name', '');
+          $('#do_rotate').text('anim(CSS)');
+        } else {
+          _tgt.css('-webkit-animation-name', 'rotate-y');
+          $('#do_rotate').text('stop');
+        }
+      });
+    </script>
+  </body>
+</html>

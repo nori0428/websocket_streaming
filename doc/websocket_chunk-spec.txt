@@ -1,0 +1,75 @@
+// $Id$
+
+- websocket_chunk.js APIs
+
+  o init(json)
+    initialize websocket handler.
+
+    - arguments
+    <mandatory>
+    host     : STRING
+               hostname or ipaddr for websocket server
+    resource : STRING
+               websocket resource name
+    onopen   : FUNCTION
+               callback function when connected websocket
+    onclose  : FUNCTION
+               callback function when disconnected websocket
+    onmessage: FUNCTION
+              callback function when recv VALID JSON obj
+
+    <optional>
+    port    : NUMBER
+              port number for websocket server
+              if not exists, using 80 as default.
+
+    - return value
+      websocket_chunk.SUCCESS: succeed to init
+      websocket_chunk.INVALID_ARGS: mandatory args not exist
+      websocket_chunk.INVALID_STATE: already started
+
+    - callback spec
+      onopen(json)   : JSON object
+              	       json.event: STRING('conn')
+		       json.tgt  : STRING(uri for websocket)
+      onclose(json)  : JSON object
+              	       json.event: STRING('disc')
+		       json.tgt  : STRING(uri for websocket)
+      onmessage(json): JSON object
+              	       json: JSON object what you define
+
+    - example to use
+      websocket_chunk.init({"host": "127.0.0.1",
+                            "port": 8000,
+                            "resource": "/chat",
+                            "onopen": user.onopen,
+			    "onmessage": user.onmessage,
+			    "onclose": user.onclose});
+
+  o start()
+    start to recv messages via websocket
+ 
+    - arguments
+      none
+
+    - return value
+      websocket_chunk.SUCCESS: succeed to start
+      websocket_chunk.INVALID_ARGS: not initialized
+      websocket_chunk.INVALID_STATE: already started
+
+    - example to use
+      websocket_chunk.start();
+
+  o stop()
+    stop to recv messages via websocket
+ 
+    - arguments
+      none
+
+    - return value
+      websocket_chunk.SUCCESS: succeed to stop
+
+    - example to use
+      websocket_chunk.stop();
+
+// EOF

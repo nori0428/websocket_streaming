@@ -1,0 +1,27 @@
+//$Id$
+
+1.install libs for making daemon
+  - OpenCV 2.0 for cocoa (on Snow Leopard)
+    http://code.google.com/p/opencv-cocoa/
+  - libevent
+    http://monkey.org/~provos/libevent/
+    (you can use port instead of making from source)
+
+  plz re-write Makefile that suits your environment.
+
+2.exec daemon
+  $ ./jpeg_streamer
+
+  this daemon runs on 9000/TCP
+
+3.add setting into lighttpd.conf like this.
+
+  websocket.server = ("/player" => ("host" => "your ipaddr", "port" => 9000))
+
+4.run lighttpd
+  # lighttpd -f lighttpd.conf
+
+5.access from browser
+  http://lighty_ipaddr:lighty_port/index.html
+
+// EOF
