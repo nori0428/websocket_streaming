@@ -17,12 +17,22 @@
 
 3.add setting into lighttpd.conf like this.
 
-  websocket.server = ("/player" => ("host" => "ipaddr that daemon runs", "port" => 9000))
+  websocket.server = ("/player" => ("host" => "127.0.0.1", "port" => 9000))
 
 4.run lighttpd
   # lighttpd -f lighttpd.conf
 
-5.access from browser
+5.re-write player.js
+  player.worker.postMessage({'cmd':'init',
+                                   'host': '127.0.0.1',
+                                   'port': 8000,
+                                   'resource': 'player',
+                                   'cache':player.cache});
+
+  host => your lighty ipaddr
+  port => your lighty listen port
+
+6.access from browser
   http://lighty_ipaddr:lighty_port/index.html
 
 // EOF
