@@ -11,10 +11,6 @@
                hostname or ipaddr for websocket server
     resource : STRING
                websocket resource name
-    onopen   : FUNCTION
-               callback function when connected websocket
-    onclose  : FUNCTION
-               callback function when disconnected websocket
     onmessage: FUNCTION
               callback function when recv VALID JSON obj
 
@@ -22,6 +18,10 @@
     port    : NUMBER
               port number for websocket server
               if not exists, using 80 as default.
+    onopen   : FUNCTION
+               callback function when connected websocket
+    onclose  : FUNCTION
+               callback function when disconnected websocket
 
     - return value
       websocket_chunk.SUCCESS: succeed to init
