@@ -9,14 +9,15 @@
 
   plz re-write Makefile that suits your environment.
 
-2.exec daemon
+2.make and exec daemon
+  $ make
   $ ./jpeg_streamer
 
   this daemon runs on 9000/TCP
 
 3.add setting into lighttpd.conf like this.
 
-  websocket.server = ("/player" => ("host" => "your ipaddr", "port" => 9000))
+  websocket.server = ("/player" => ("host" => "ipaddr that daemon runs", "port" => 9000))
 
 4.run lighttpd
   # lighttpd -f lighttpd.conf
