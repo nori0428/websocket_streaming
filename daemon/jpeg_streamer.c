@@ -166,7 +166,7 @@ int
 my_main(int argc, char *argv[]) {
     pthread_t tid;
     CvCapture *capture;
-    IplImage *image, *jpg;
+    IplImage *image_native, *image, *jpg;
     CvMat *mat;
     int p[] = {CV_IMWRITE_JPEG_QUALITY, 50};
     double t = 0.0, f = (double)cvGetTickFrequency() * 1000.0;
@@ -192,11 +192,13 @@ my_main(int argc, char *argv[]) {
     pthread_mutex_init(&gMutex, &gMutexAttr);
     cvNamedWindow("local view", CV_WINDOW_AUTOSIZE);
     
+    image = cvCreateImage(cvSize(640, 480), IPL_DEPTH_8U, 3);
     while (1) {
         t = (double)cvGetTickCount();
         do {
-            image = cvQueryFrame(capture);
-        } while (!image);
+            image_native = cvQueryFrame(capture);
+        } while (!image_native);
+	cvResize(image_native, image, CV_INTER_CUBIC);
         mat = cvEncodeImage(".jpg", image, p);
         memset(b64_jpg, 0, sizeof(b64_jpg));
         b64_encode(b64_jpg, mat->data.ptr, mat->step);
